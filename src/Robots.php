@@ -45,7 +45,7 @@ class Robots implements ServerMiddlewareInterface
                 $response->getBody()->write("User-Agent: *\nDisallow: /");
             }
 
-            return $response;
+            return $response->withHeader('Content-Type', 'text/plain');
         }
 
         $response = $delegate->process($request);

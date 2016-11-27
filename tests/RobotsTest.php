@@ -34,6 +34,7 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame("User-Agent: *\nDisallow: /", (string) $response->getBody());
+        $this->assertSame('text/plain', $response->getHeaderLine('Content-Type'));
     }
 
     public function testRobotsHeader()
@@ -60,5 +61,6 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame("User-Agent: *\nAllow: /", (string) $response->getBody());
+        $this->assertSame('text/plain', $response->getHeaderLine('Content-Type'));
     }
 }
