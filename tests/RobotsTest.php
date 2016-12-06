@@ -10,11 +10,9 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 {
     public function testNoRobotsHeader()
     {
-        $request = Factory::createServerRequest();
-
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new Robots(),
-        ]))->dispatch($request);
+        ]);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame('noindex, nofollow, noarchive', $response->getHeaderLine('X-Robots-Tag'));
@@ -24,9 +22,9 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
     {
         $request = Factory::createServerRequest([], 'GET', '/robots.txt');
 
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new Robots(),
-        ]))->dispatch($request);
+        ], $request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame("User-Agent: *\nDisallow: /", (string) $response->getBody());
@@ -35,11 +33,9 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 
     public function testRobotsHeader()
     {
-        $request = Factory::createServerRequest();
-
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new Robots(true),
-        ]))->dispatch($request);
+        ]);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame('index, follow', $response->getHeaderLine('X-Robots-Tag'));
@@ -49,9 +45,9 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
     {
         $request = Factory::createServerRequest([], 'GET', '/robots.txt');
 
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new Robots(true),
-        ]))->dispatch($request);
+        ], $request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame("User-Agent: *\nAllow: /", (string) $response->getBody());
