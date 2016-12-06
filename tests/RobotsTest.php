@@ -4,20 +4,17 @@ namespace Middlewares\Tests;
 
 use Middlewares\Robots;
 use Middlewares\Utils\Dispatcher;
-use Middlewares\Utils\CallableMiddleware;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\Response;
+use Middlewares\Utils\Factory;
 
 class RobotsTest extends \PHPUnit_Framework_TestCase
 {
     public function testNoRobotsHeader()
     {
+        $request = Factory::createServerRequest();
+
         $response = (new Dispatcher([
             new Robots(),
-            new CallableMiddleware(function () {
-                return new Response();
-            }),
-        ]))->dispatch(new ServerRequest());
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame('noindex, nofollow, noarchive', $response->getHeaderLine('X-Robots-Tag'));
@@ -25,12 +22,11 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 
     public function testNoRobotsTxt()
     {
+        $request = Factory::createServerRequest([], 'GET', '/robots.txt');
+
         $response = (new Dispatcher([
             new Robots(),
-            new CallableMiddleware(function () {
-                return new Response();
-            }),
-        ]))->dispatch(new ServerRequest([], [], '/robots.txt'));
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame("User-Agent: *\nDisallow: /", (string) $response->getBody());
@@ -39,12 +35,11 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 
     public function testRobotsHeader()
     {
+        $request = Factory::createServerRequest();
+
         $response = (new Dispatcher([
             new Robots(true),
-            new CallableMiddleware(function () {
-                return new Response();
-            }),
-        ]))->dispatch(new ServerRequest());
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame('index, follow', $response->getHeaderLine('X-Robots-Tag'));
@@ -52,12 +47,11 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
 
     public function testRobotsTxt()
     {
+        $request = Factory::createServerRequest([], 'GET', '/robots.txt');
+
         $response = (new Dispatcher([
             new Robots(true),
-            new CallableMiddleware(function () {
-                return new Response();
-            }),
-        ]))->dispatch(new ServerRequest([], [], '/robots.txt'));
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertSame("User-Agent: *\nAllow: /", (string) $response->getBody());
