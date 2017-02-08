@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * New option `sitemap`
 
+### Changed
+
+* The argument in the constructor is now mandatory
+
 ## 0.3.0 - 2016-12-26
 
 ### Changed

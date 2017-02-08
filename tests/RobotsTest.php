@@ -12,7 +12,7 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
     public function testNoRobotsHeader()
     {
         $response = Dispatcher::run([
-            new Robots(),
+            new Robots(false),
         ]);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -24,7 +24,7 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
         $request = Factory::createServerRequest([], 'GET', '/robots.txt');
 
         $response = Dispatcher::run([
-            new Robots(),
+            new Robots(false),
         ], $request);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);

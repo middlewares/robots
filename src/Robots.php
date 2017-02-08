@@ -14,7 +14,7 @@ class Robots implements MiddlewareInterface
     /**
      * @var bool
      */
-    private $allow = false;
+    private $allow;
 
     /**
      * @var string|null
@@ -26,9 +26,9 @@ class Robots implements MiddlewareInterface
      *
      * @param bool $allow
      */
-    public function __construct($allow = false)
+    public function __construct($allow)
     {
-        $this->allow = $allow;
+        $this->allow = (bool) $allow;
     }
 
     /**

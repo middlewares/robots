@@ -7,7 +7,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![SensioLabs Insight][ico-sensiolabs]][link-sensiolabs]
 
-Middleware to disable the robots of the search engines for non-production environment. Adds automatically the header `X-Robots-Tag: noindex, nofollow, noarchive` in all responses and returns a default body for `/robots.txt` request.
+Middleware to enable/disable the robots of the search engines for non-production environment. Adds automatically the header `X-Robots-Tag` in all responses and returns a default body for `/robots.txt` request.
 
 ## Requirements
 
@@ -27,7 +27,7 @@ composer require middlewares/robots
 
 ```php
 $dispatcher = new Dispatcher([
-	new Middlewares\Robots()
+	new Middlewares\Robots(false)
 ]);
 
 $response = $dispatcher->dispatch(new ServerRequest());
@@ -37,13 +37,13 @@ echo $response->getHeaderLine('X-Robots-Tag'); //noindex, nofollow, noarchive
 
 ## Options
 
-#### `__construct($robots = false)`
+#### `__construct(bool $allow)`
 
-Set `true` to allow search engines instead disallow.
+Set `true` to allow search engines and `false` to disallow.
 
 #### `sitemap(string $sitemap)`
 
-The url of the sitemap file.
+Optional url of a sitemap file.
 
 ---
 
