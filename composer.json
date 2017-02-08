@@ -1,7 +1,7 @@
 {
     "name": "middlewares/robots",
     "type": "library",
-    "description": "Middleware to disable the robots of the search engines for non-production environment",
+    "description": "Middleware to enable/disable the robots of the search engines",
     "license": "MIT",
     "keywords": [
         "psr-7",
