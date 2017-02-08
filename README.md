@@ -41,7 +41,7 @@ echo $response->getHeaderLine('X-Robots-Tag'); //noindex, nofollow, noarchive
 
 Set `true` to allow search engines instead disallow.
 
-#### `sitemap($sitemap)`
+#### `sitemap(string $sitemap)`
 
 The url of the sitemap file.
 
