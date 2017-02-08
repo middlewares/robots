@@ -14,16 +14,35 @@ class Robots implements MiddlewareInterface
     /**
      * @var bool
      */
-    private $robots = false;
+    private $allow = false;
+
+    /**
+     * @var string|null
+     */
+    private $sitemap;
 
     /**
      * Set whether search engines robots are allowed or not.
      *
-     * @param bool $robots
+     * @param bool $allow
      */
-    public function __construct($robots = false)
+    public function __construct($allow = false)
     {
-        $this->robots = $robots;
+        $this->allow = $allow;
+    }
+
+    /**
+     * Set the path to the sitemap file.
+     *
+     * @param string $sitemap
+     *
+     * @return self
+     */
+    public function sitemap($sitemap)
+    {
+        $this->sitemap = $sitemap;
+
+        return $this;
     }
 
     /**
@@ -39,18 +58,26 @@ class Robots implements MiddlewareInterface
         if ($request->getUri()->getPath() === '/robots.txt') {
             $response = Utils\Factory::createResponse();
 
-            if ($this->robots) {
-                $response->getBody()->write("User-Agent: *\nAllow: /");
+            $body = ['User-Agent: *'];
+
+            if ($this->allow) {
+                $body[] = 'Allow: /';
             } else {
-                $response->getBody()->write("User-Agent: *\nDisallow: /");
+                $body[] = 'Disallow: /';
             }
+
+            if ($this->sitemap) {
+                $body[] = "Sitemap: {$this->sitemap}";
+            }
+
+            $response->getBody()->write(implode("\n", $body));
 
             return $response->withHeader('Content-Type', 'text/plain');
         }
 
         $response = $delegate->process($request);
 
-        if ($this->robots) {
+        if ($this->allow) {
             return $response->withHeader(self::HEADER, 'index, follow');
         }
 
