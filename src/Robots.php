@@ -66,7 +66,7 @@ class Robots implements MiddlewareInterface
                 $body[] = 'Disallow: /';
             }
 
-            if ($this->sitemap) {
+            if (!empty($this->sitemap)) {
                 $body[] = "Sitemap: {$this->sitemap}";
             }
 
