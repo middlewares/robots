@@ -63,8 +63,10 @@ class RobotsTest extends \PHPUnit_Framework_TestCase
             (new Robots(true))->sitemap('http://localhost.com/sitemap.xml'),
         ], $request);
 
+        $expected = "User-Agent: *\nAllow: /\nSitemap: http://localhost.com/sitemap.xml";
+
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertSame("User-Agent: *\nAllow: /\nSitemap: http://localhost.com/sitemap.xml", (string) $response->getBody());
+        $this->assertSame($expected, (string) $response->getBody());
         $this->assertSame('text/plain', $response->getHeaderLine('Content-Type'));
     }
 }
