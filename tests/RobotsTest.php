@@ -2,12 +2,13 @@
 
 namespace Middlewares\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Middlewares\Robots;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
 use Psr\Http\Message\ResponseInterface;
 
-class RobotsTest extends \PHPUnit_Framework_TestCase
+class RobotsTest extends TestCase
 {
     public function testNoRobotsHeader()
     {
