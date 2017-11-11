@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares;
 
@@ -33,12 +34,8 @@ class Robots implements MiddlewareInterface
 
     /**
      * Set the path to the sitemap file.
-     *
-     * @param string $sitemap
-     *
-     * @return self
      */
-    public function sitemap($sitemap)
+    public function sitemap(string $sitemap): self
     {
         $this->sitemap = $sitemap;
 
@@ -47,13 +44,8 @@ class Robots implements MiddlewareInterface
 
     /**
      * Process a request and return a response.
-     *
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($request->getUri()->getPath() === '/robots.txt') {
             $response = Utils\Factory::createResponse();
