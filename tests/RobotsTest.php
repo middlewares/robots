@@ -23,7 +23,7 @@ class RobotsTest extends TestCase
 
     public function testNoRobotsTxt()
     {
-        $request = Factory::createServerRequest([], 'GET', '/robots.txt');
+        $request = Factory::createServerRequest('GET', '/robots.txt');
 
         $response = Dispatcher::run([
             new Robots(false),
@@ -46,7 +46,7 @@ class RobotsTest extends TestCase
 
     public function testRobotsTxt()
     {
-        $request = Factory::createServerRequest([], 'GET', '/robots.txt');
+        $request = Factory::createServerRequest('GET', '/robots.txt');
 
         $response = Dispatcher::run([
             new Robots(true),
@@ -59,7 +59,7 @@ class RobotsTest extends TestCase
 
     public function testSitemap()
     {
-        $request = Factory::createServerRequest([], 'GET', '/robots.txt');
+        $request = Factory::createServerRequest('GET', '/robots.txt');
 
         $response = Dispatcher::run([
             (new Robots(true))->sitemap('http://localhost.com/sitemap.xml'),
