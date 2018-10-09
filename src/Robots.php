@@ -30,9 +30,9 @@ class Robots implements MiddlewareInterface
      *
      * @param bool $allow
      */
-    public function __construct($allow)
+    public function __construct(bool $allow)
     {
-        $this->allow = (bool) $allow;
+        $this->allow = $allow;
     }
 
     /**
