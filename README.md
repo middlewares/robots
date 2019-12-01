@@ -26,7 +26,7 @@ composer require middlewares/robots
 
 ```php
 $dispatcher = new Dispatcher([
-	new Middlewares\Robots(false)
+    new Middlewares\Robots(false)
 ]);
 
 $response = $dispatcher->dispatch(new ServerRequest());
