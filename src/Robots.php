@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Middlewares\Utils\Traits\HasResponseFactory;
 use Middlewares\Utils\Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,8 +12,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class Robots implements MiddlewareInterface
 {
-    use HasResponseFactory;
-
     const HEADER = 'X-Robots-Tag';
 
     /**
@@ -26,6 +23,11 @@ class Robots implements MiddlewareInterface
      * @var string|null
      */
     private $sitemap;
+
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
 
     /**
      * Set whether search engines robots are allowed or not.
@@ -52,7 +54,7 @@ class Robots implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($request->getUri()->getPath() === '/robots.txt') {
-            $response = $this->createResponse();
+            $response = $this->responseFactory->createResponse();
 
             $body = ['User-Agent: *'];
 
