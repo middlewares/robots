@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class Robots implements MiddlewareInterface
 {
-    const HEADER = 'X-Robots-Tag';
+    public const HEADER = 'X-Robots-Tag';
 
     /**
      * @var bool
@@ -32,7 +32,7 @@ class Robots implements MiddlewareInterface
     /**
      * Set whether search engines robots are allowed or not.
      */
-    public function __construct(bool $allow, ResponseFactoryInterface $responseFactory = null)
+    public function __construct(bool $allow, ?ResponseFactoryInterface $responseFactory = null)
     {
         $this->allow = $allow;
         $this->responseFactory = $responseFactory ?: Factory::getResponseFactory();
