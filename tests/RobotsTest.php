@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class RobotsTest extends TestCase
 {
-    public function testNoRobotsHeader()
+    public function testNoRobotsHeader(): void
     {
         $response = Dispatcher::run([
             new Robots(false),
@@ -21,7 +21,7 @@ class RobotsTest extends TestCase
         $this->assertSame('noindex, nofollow, noarchive', $response->getHeaderLine('X-Robots-Tag'));
     }
 
-    public function testNoRobotsTxt()
+    public function testNoRobotsTxt(): void
     {
         $request = Factory::createServerRequest('GET', '/robots.txt');
 
@@ -34,7 +34,7 @@ class RobotsTest extends TestCase
         $this->assertSame('text/plain', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testRobotsHeader()
+    public function testRobotsHeader(): void
     {
         $response = Dispatcher::run([
             new Robots(true),
@@ -44,7 +44,7 @@ class RobotsTest extends TestCase
         $this->assertSame('index, follow', $response->getHeaderLine('X-Robots-Tag'));
     }
 
-    public function testRobotsTxt()
+    public function testRobotsTxt(): void
     {
         $request = Factory::createServerRequest('GET', '/robots.txt');
 
@@ -57,7 +57,7 @@ class RobotsTest extends TestCase
         $this->assertSame('text/plain', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testSitemap()
+    public function testSitemap(): void
     {
         $request = Factory::createServerRequest('GET', '/robots.txt');
 
